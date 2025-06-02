@@ -2,185 +2,178 @@ const fs = require('fs');
 const WebSocket = require('ws');
 const http = require('http');
 
-// Create an HTTP server
+const DATA_FILE = './data.json';
+const PORT = process.env.PORT || 8080;
+
 const server = http.createServer();
 const wss = new WebSocket.Server({ server });
 
-const DATA_FILE = './data.json';
+// Load existing or initialize data
+let { students = {}, teacher = {}, questionBank = {}, answers = {} } =
+  fs.existsSync(DATA_FILE)
+    ? JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'))
+    : { students: {}, teacher: {}, questionBank: {}, answers: {} };
 
-// Load data from file
-let { students: savedStudents, questionBank } = fs.existsSync(DATA_FILE)
-  ? JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'))
-  : { students: {}, questionBank: {} };
-
-// In-memory WebSocket connections
-let students = {};
-
-// Save data to file
 function saveData() {
-  fs.writeFileSync(DATA_FILE, JSON.stringify({ students: savedStudents, questionBank }, null, 2));
+  fs.writeFileSync(DATA_FILE, JSON.stringify({ students, teacher, questionBank, answers }, null, 2));
 }
 
-wss.on('connection', (ws, req) => {
-  console.log('New client connected');
+let studentSockets = {}; // { studentId: ws }
 
-  ws.on('message', (message) => {
-    const msgStr = message.toString();
-    console.log('Received message:', msgStr);
-    const data = JSON.parse(msgStr);
+wss.on('connection', (ws) => {
+  ws.on('message', (msg) => {
+    let data;
+    try {
+      data = JSON.parse(msg);
+    } catch {
+      ws.send(JSON.stringify({ type: 'error', message: 'Invalid JSON.' }));
+      return;
+    }
 
-    switch (data.type) {
-      case 'register':
-        // Store the WebSocket connection in memory
-        students[data.studentId] = ws;
-        console.log('Student WebSocket registered:', data.studentId);
+    // Student Registration
+    if (data.type === 'register') {
+      if (!data.studentName || !data.studentId || !data.studentPassword) {
+        ws.send(JSON.stringify({ type: 'register', status: 'error', message: 'All fields are required.' }));
+      } else if (students[data.studentId]) {
+        ws.send(JSON.stringify({ type: 'register', status: 'error', message: 'Student already registered.' }));
+      } else {
+        students[data.studentId] = {
+          name: data.studentName,
+          id: data.studentId,
+          password: data.studentPassword
+        };
+        saveData();
+        ws.send(JSON.stringify({ type: 'register', status: 'success', message: 'Registration successful.' }));
+      }
+      return;
+    }
 
-        // Add the student to savedStudents if not already present
-        if (!savedStudents[data.studentId]) {
-          savedStudents[data.studentId] = {
-            name: data.studentName,
-            id: data.studentId,
-            password: data.studentPassword,
-          };
-          saveData();
-          console.log(`Student registered: ${data.studentId}`);
-        }
-        ws.send(JSON.stringify({ type: 'register', status: 'success' }));
-        break;
+    // Teacher Login (set or check password)
+    if (data.type === 'loginTeacher') {
+      if (!data.password) {
+        ws.send(JSON.stringify({ type: 'loginTeacher', status: 'error', message: 'Password required.' }));
+      } else if (!teacher.password) {
+        teacher.password = data.password;
+        saveData();
+        ws.send(JSON.stringify({ type: 'loginTeacher', status: 'success', message: 'Password set. Welcome!' }));
+      } else if (teacher.password === data.password) {
+        ws.send(JSON.stringify({ type: 'loginTeacher', status: 'success', message: 'Login successful.' }));
+      } else {
+        ws.send(JSON.stringify({ type: 'loginTeacher', status: 'error', message: 'Incorrect password.' }));
+      }
+      return;
+    }
 
-      case 'sendQuestion':
-        let questionToSend = null;
-        if (data.subject && typeof data.questionIndex === 'number') {
-          const subjectKey = data.subject;
-          const qArr = questionBank[subjectKey] || [];
-          questionToSend = qArr[data.questionIndex];
-          console.log('Looking for question:', subjectKey, 'Found:', !!questionToSend);
-          console.log('Looking for question:',data.questionIndex, 'Found:', !!questionToSend);
-        }
-        const targetStudent = students[data.studentId];
-        console.log('Looking for student:', data.studentId, 'Found:', !!targetStudent);
-        if (targetStudent && questionToSend) {
-          const message = {
-            type: 'question',
-            question: questionToSend,
-          };
-          console.log('Sending to student:', data.studentId, message);
-          targetStudent.send(JSON.stringify(message));
-          ws.send(JSON.stringify({ type: 'sendQuestion', status: 'success' }));
-          console.log(`Question sent to student: ${data.studentId}`);
-        } else {
-          ws.send(
-            JSON.stringify({
-              type: 'sendQuestion',
-              status: 'error',
-              message: 'Student not connected or question not found',
-            
-            })
-          );
-          if (!targetStudent) {
-            console.log('Student not connected:', data.studentId);
-          }
-          if (!questionToSend) {
-            console.log('Question not found for subject/index:', data.subject, data.questionIndex);
-          }
-        }
-        break;
-
-      case 'submitAnswer':
-        console.log(`Answer received from ${data.studentId}: ${data.answer}`);
-        ws.send(
-          JSON.stringify({
-            type: 'submitAnswer',
-            status: 'received',
-          })
-        );
-        break;
-
-      case 'addQuestion':
-        if (!questionBank[data.subject]) {
-          questionBank[data.subject] = [];
-        }
+    // Add Question (by teacher)
+    if (data.type === 'addQuestion') {
+      if (!data.subject || !data.question) {
+        ws.send(JSON.stringify({ type: 'addQuestion', status: 'error', message: 'Subject and question required.' }));
+      } else {
+        if (!questionBank[data.subject]) questionBank[data.subject] = [];
         questionBank[data.subject].push(data.question);
         saveData();
-        console.log(`Question added to ${data.subject}:`, data.question);
-        break;
-
-      case 'resetQuestions':
-        if (data.subject && questionBank[data.subject]) {
-          questionBank[data.subject] = [];
-          saveData();
-          console.log(`Questions for subject "${data.subject}" have been reset.`);
-        } else {
-          console.log(`Invalid subject or subject not found: ${data.subject}`);
-        }
-        break;
-
-      case 'resetSystem':
-        savedStudents = {};
-        saveData();
-        console.log('System reset: All students cleared.');
-        break;
-
-      case 'resetStudents':
-        savedStudents = {};
-        saveData();
-        console.log('All student data has been reset.');
-        break;
-
-      case 'login':
-        console.log('Login attempt:', data);
-        const student = savedStudents[data.id];
-        console.log('Student from DB:', student);
-        if (
-          student &&
-          student.name === data.name &&
-          student.password === data.password
-        ) {
-          students[data.id] = ws; // Register the WebSocket on login
-          ws.send(
-            JSON.stringify({
-              type: 'login',
-              status: 'success',
-              studentId: data.id,
-            })
-          );
-          console.log(`Student logged in: ${data.id}`);
-        } else {
-          ws.send(
-            JSON.stringify({
-              type: 'login',
-              status: 'error',
-              message: 'Invalid credentials',
-            })
-          );
-          console.log(`Failed login attempt for student ID: ${data.id}`);
-        }
-        break;
-
-      default:
-        console.log('Unknown message type:', data.type);
+        ws.send(JSON.stringify({ type: 'addQuestion', status: 'success', message: 'Question added.' }));
+      }
+      return;
     }
+
+    // Send Question to Student
+    if (data.type === 'sendQuestion') {
+      const { studentId, subject, questionIndex } = data;
+      if (!students[studentId]) {
+        ws.send(JSON.stringify({ type: 'sendQuestion', status: 'error', message: 'Student not registered.' }));
+        return;
+      }
+      if (!questionBank[subject] || !questionBank[subject][questionIndex]) {
+        ws.send(JSON.stringify({ type: 'sendQuestion', status: 'error', message: 'Question not found.' }));
+        return;
+      }
+      const q = questionBank[subject][questionIndex];
+      if (studentSockets[studentId]) {
+        studentSockets[studentId].send(JSON.stringify({ type: 'question', subject, question: q, questionIndex }));
+        ws.send(JSON.stringify({ type: 'sendQuestion', status: 'success', message: 'Question sent.' }));
+      } else {
+        ws.send(JSON.stringify({ type: 'sendQuestion', status: 'error', message: 'Student not connected.' }));
+      }
+      return;
+    }
+
+    // Student submits answer
+    if (data.type === 'submitAnswer') {
+      const { studentId, subject, questionIndex, answer } = data;
+      if (!students[studentId]) {
+        ws.send(JSON.stringify({ type: 'submitAnswer', status: 'error', message: 'Student not registered.' }));
+        return;
+      }
+      if (!answers[studentId]) answers[studentId] = [];
+      answers[studentId].push({ subject, questionIndex, answer });
+      saveData();
+      ws.send(JSON.stringify({ type: 'submitAnswer', status: 'success', message: 'Answer submitted.' }));
+      return;
+    }
+
+    // Student login (optional, for session mgmt)
+    if (data.type === 'loginStudent') {
+      if (!students[data.studentId]) {
+        ws.send(JSON.stringify({ type: 'loginStudent', status: 'error', message: 'Student not found.' }));
+      } else if (students[data.studentId].password !== data.studentPassword) {
+        ws.send(JSON.stringify({ type: 'loginStudent', status: 'error', message: 'Incorrect password.' }));
+      } else {
+        studentSockets[data.studentId] = ws;
+        ws.send(JSON.stringify({ type: 'loginStudent', status: 'success', message: 'Login successful.' }));
+      }
+      return;
+    }
+
+    // List all questions for a subject (teacher or student)
+    if (data.type === 'listQuestions') {
+      const { subject } = data;
+      if (!questionBank[subject]) {
+        ws.send(JSON.stringify({ type: 'listQuestions', status: 'error', message: 'Subject not found.' }));
+      } else {
+        ws.send(JSON.stringify({ type: 'listQuestions', status: 'success', questions: questionBank[subject] }));
+      }
+      return;
+    }
+
+    // List all answers for a student (teacher)
+    if (data.type === 'listAnswers') {
+      const { studentId } = data;
+      ws.send(JSON.stringify({
+        type: 'listAnswers',
+        status: 'success',
+        answers: answers[studentId] || []
+      }));
+      return;
+    }
+
+    // Remove student (teacher)
+    if (data.type === 'removeStudent') {
+      if (students[data.studentId]) {
+        delete students[data.studentId];
+        saveData();
+        ws.send(JSON.stringify({ type: 'removeStudent', status: 'success', message: 'Student removed.' }));
+      } else {
+        ws.send(JSON.stringify({ type: 'removeStudent', status: 'error', message: 'Student not found.' }));
+      }
+      return;
+    }
+
+    ws.send(JSON.stringify({ type: 'error', message: 'Unknown or unhandled message type.' }));
   });
 
   ws.on('close', () => {
-    console.log('Client disconnected');
-    for (const [id, socket] of Object.entries(students)) {
+    // Remove student socket on disconnect
+    for (const [id, socket] of Object.entries(studentSockets)) {
       if (socket === ws) {
-        delete students[id];
-        console.log(`Student disconnected: ${id}`);
+        delete studentSockets[id];
         break;
       }
     }
   });
 });
 
-// Start the server
-const PORT = process.env.PORT || 8080;
-server.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
-
-// Minimal HTTP response to satisfy Render port scanner
+server.listen(PORT, () => { console.log(`Server running on port ${PORT}`); });
 server.on('request', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end('WebSocket server is live.');
