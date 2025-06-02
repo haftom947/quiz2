@@ -13,6 +13,7 @@
     const studentName = document.querySelector('.student-name1').value.trim();
     const studentId = document.querySelector('.student-id1').value.trim();
     const studentPassword = document.querySelector('.student-password1').value.trim();
+    
 
     const loginData = {
       type: 'login',
