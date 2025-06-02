@@ -175,8 +175,15 @@ wss.on('connection', (ws, req) => {
 });
 
 // Start the server
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+server.on('request', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('WebSocket server is live.');
+});
+
+
 
