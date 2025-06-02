@@ -180,10 +180,8 @@ server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+// Minimal HTTP response to satisfy Render port scanner
 server.on('request', (req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
   res.end('WebSocket server is live.');
 });
-
-
-
