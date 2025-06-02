@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Host Control Page</title>
+  <link rel="stylesheet" href="kshs.css">
+  <script>
+    // Redirect to login page if not authenticated
+    if (localStorage.getItem('isTeacherAuthenticated') !== 'true') {
+      window.location.href = 'teacher-login.html';
+    }
+  </script>
+</head>
+<body>
+  <div class="main-host-page">
+    <h1 class="host-title">Host Control Page</h1>
+    <div class="register-area">
+      <input class="student-name" type="text" placeholder="Enter student Name" required>
+      <input class="student-id" type="text" placeholder="Enter Student ID" required>
+      <input class="student-password" type="password" placeholder="Set student's Entry code" required>
+      <button class="register-button js-register-button">Register</button>
+      <button class="remove-button js-remove-button">Remove</button>
+    </div>
+    <div class="selection-all">
+      <div class="student-selection">
+        <label for="student-id">Select a Student</label>
+        <select name="Student" id="student-id">
+          <option value="S1" selected>S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+          <option value="S4">S4</option>
+          <option value="S5">S5</option>
+          <option value="S6">S6</option>
+        </select>
+      </div>
+      <div class="subject-selection">
+        <label for="subject">Select a Subject</label>
+        <select name="Subject" id="subject">
+          <option value="maths" selected>Maths</option>
+          <option value="english">English</option>
+          <option value="chemistry">Chemistry</option>
+          <option value="biology">Biology</option>
+          <option value="tigrigna">Tigrigna</option>
+          <option value="economics">Economics</option>
+          <option value="physics">Physics</option>
+          <option value="geography">Geography</option>
+        </select>
+      </div>
+      <div class="question-selection">
+        <label for="question-no">Select Question</label>
+        <select name="" id="question-no">
+          <option value="q1" selected>Q1</option>
+          <option value="q2">Q2</option>
+          <option value="q3">Q3</option>
+          <option value="q4">Q4</option>
+          <option value="q5">Q5</option>
+          <option value="q6">Q6</option>
+          <option value="q7">Q7</option>
+          <option value="q8">Q8</option>
+          <option value="q9">Q9</option>
+          <option value="q10">Q10</option>
+          <option value="q11">Q11</option>
+          <option value="q12">Q12</option>
+        </select>
+      </div>
+      <button class="send-button">Send Question</button>
+      <button class="question-entry-button js-question-entry-button">Enter Your Question</button>
+      <div class="questions-entry js-question-entry">
+        <label for="subject-question">Select a Subject</label>
+        <select name="Subject" id="subject-question">
+          <option value="nothing" selected disabled>Here</option>
+          <option value="maths">Maths</option>
+          <option value="english">English</option>
+          <option value="chemistry">Chemistry</option>
+          <option value="biology">Biology</option>
+          <option value="tigrigna">Tigrigna</option>
+          <option value="economics">Economics</option>
+          <option value="physics">Physics</option>
+          <option value="geography">Geography</option>
+        </select>
+      </div>
+      <div class="question-web js-question-web">
+      </div>
+    </div>
+    <button id="logout-button">Logout</button>
+  </div>
+  <script src="DayJS/dayjs.min.js"></script>
+  <script type="module" src="kshs.js"></script>
+</body>
+</html>

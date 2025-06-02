@@ -1,0 +1,820 @@
+{
+  "students": {
+    "S1": {
+      "name": "Haftom",
+      "id": "S1",
+      "password": "123abc"
+    },
+    "S2": {
+      "name": "Ekram",
+      "id": "S2",
+      "password": "456abc"
+    },
+    "S3": {
+      "name": "Zenaab",
+      "id": "S3",
+      "password": "789abc"
+    },
+    "S4": {
+      "name": "Sele",
+      "id": "S4",
+      "password": "123def"
+    },
+    "S5": {
+      "name": "Beki",
+      "id": "S5",
+      "password": "456def"
+    },
+    "S6": {
+      "name": "Miki",
+      "id": "S6",
+      "password": "789def"
+    }
+  },
+  "questionBank": {
+    "Maths": [
+      {
+        "question": "What is the value of π (pi) to two decimal places?",
+        "choiceA": "3.12",
+        "choiceB": "3.14",
+        "choiceC": "3.16",
+        "choiceD": "3.18",
+        "correct": "B"
+      },
+      {
+        "question": "What is 7 × 8?",
+        "choiceA": "54",
+        "choiceB": "56",
+        "choiceC": "58",
+        "choiceD": "64",
+        "correct": "B"
+      },
+      {
+        "question": "What is the square root of 81?",
+        "choiceA": "7",
+        "choiceB": "8",
+        "choiceC": "9",
+        "choiceD": "10",
+        "correct": "C"
+      },
+      {
+        "question": "What is the next prime number after 7?",
+        "choiceA": "9",
+        "choiceB": "10",
+        "choiceC": "11",
+        "choiceD": "13",
+        "correct": "C"
+      },
+      {
+        "question": "What is 15% of 200?",
+        "choiceA": "20",
+        "choiceB": "25",
+        "choiceC": "30",
+        "choiceD": "35",
+        "correct": "C"
+      },
+      {
+        "question": "What is the area of a rectangle with length 5 and width 3?",
+        "choiceA": "8",
+        "choiceB": "15",
+        "choiceC": "10",
+        "choiceD": "18",
+        "correct": "B"
+      },
+      {
+        "question": "What is the solution to the equation x + 5 = 12?",
+        "choiceA": "5",
+        "choiceB": "6",
+        "choiceC": "7",
+        "choiceD": "8",
+        "correct": "C"
+      },
+      {
+        "question": "What is the sum of the angles in a triangle?",
+        "choiceA": "90°",
+        "choiceB": "180°",
+        "choiceC": "270°",
+        "choiceD": "360°",
+        "correct": "B"
+      },
+      {
+        "question": "What is 2 to the power of 5?",
+        "choiceA": "10",
+        "choiceB": "16",
+        "choiceC": "32",
+        "choiceD": "64",
+        "correct": "C"
+      },
+      {
+        "question": "What is the value of x if 2x = 18?",
+        "choiceA": "7",
+        "choiceB": "8",
+        "choiceC": "9",
+        "choiceD": "10",
+        "correct": "C"
+      },
+      {
+        "question": "What is the perimeter of a square with side length 4?",
+        "choiceA": "8",
+        "choiceB": "12",
+        "choiceC": "16",
+        "choiceD": "20",
+        "correct": "C"
+      },
+      {
+        "question": "What is the decimal equivalent of 1/4?",
+        "choiceA": "0.2",
+        "choiceB": "0.25",
+        "choiceC": "0.4",
+        "choiceD": "0.5",
+        "correct": "B"
+      }
+    ],
+    "English": [
+      {
+        "question": "Which word is a synonym for 'happy'?",
+        "choiceA": "Sad",
+        "choiceB": "Angry",
+        "choiceC": "Joyful",
+        "choiceD": "Tired",
+        "correct": "C"
+      },
+      {
+        "question": "Which is the correct past tense of 'go'?",
+        "choiceA": "Goed",
+        "choiceB": "Went",
+        "choiceC": "Go",
+        "choiceD": "Going",
+        "correct": "B"
+      },
+      {
+        "question": "What is the plural of 'child'?",
+        "choiceA": "Childs",
+        "choiceB": "Childes",
+        "choiceC": "Children",
+        "choiceD": "Childrens",
+        "correct": "C"
+      },
+      {
+        "question": "Which sentence is punctuated correctly?",
+        "choiceA": "Lets eat, Grandma.",
+        "choiceB": "Lets eat Grandma.",
+        "choiceC": "Lets, eat Grandma.",
+        "choiceD": "Lets eat Grandma",
+        "correct": "A"
+      },
+      {
+        "question": "Which is an adjective?",
+        "choiceA": "Quickly",
+        "choiceB": "Run",
+        "choiceC": "Blue",
+        "choiceD": "Sing",
+        "correct": "C"
+      },
+      {
+        "question": "What is the opposite of 'difficult'?",
+        "choiceA": "Hard",
+        "choiceB": "Easy",
+        "choiceC": "Tough",
+        "choiceD": "Complicated",
+        "correct": "B"
+      },
+      {
+        "question": "Which word is a noun?",
+        "choiceA": "Jump",
+        "choiceB": "Beautiful",
+        "choiceC": "Happiness",
+        "choiceD": "Quickly",
+        "correct": "C"
+      },
+      {
+        "question": "Which is a question word?",
+        "choiceA": "Because",
+        "choiceB": "When",
+        "choiceC": "Very",
+        "choiceD": "Always",
+        "correct": "B"
+      },
+      {
+        "question": "What is the superlative form of 'big'?",
+        "choiceA": "Bigger",
+        "choiceB": "Biggest",
+        "choiceC": "Most big",
+        "choiceD": "More big",
+        "correct": "B"
+      },
+      {
+        "question": "Which is a pronoun?",
+        "choiceA": "He",
+        "choiceB": "Run",
+        "choiceC": "Blue",
+        "choiceD": "Quickly",
+        "correct": "A"
+      },
+      {
+        "question": "Which sentence is in the future tense?",
+        "choiceA": "She eats.",
+        "choiceB": "She ate.",
+        "choiceC": "She will eat.",
+        "choiceD": "She is eating.",
+        "correct": "C"
+      },
+      {
+        "question": "Which is a verb?",
+        "choiceA": "Run",
+        "choiceB": "Blue",
+        "choiceC": "Quick",
+        "choiceD": "Happiness",
+        "correct": "A"
+      }
+    ],
+    "Chemistry": [
+      {
+        "question": "What is the chemical symbol for water?",
+        "choiceA": "HO",
+        "choiceB": "H2O",
+        "choiceC": "OH2",
+        "choiceD": "H2O2",
+        "correct": "B"
+      },
+      {
+        "question": "Which gas is most abundant in Earth's atmosphere?",
+        "choiceA": "Oxygen",
+        "choiceB": "Carbon dioxide",
+        "choiceC": "Nitrogen",
+        "choiceD": "Hydrogen",
+        "correct": "C"
+      },
+      {
+        "question": "What is the atomic number of carbon?",
+        "choiceA": "6",
+        "choiceB": "8",
+        "choiceC": "12",
+        "choiceD": "14",
+        "correct": "A"
+      },
+      {
+        "question": "Which of the following is an alkaline earth metal?",
+        "choiceA": "Sodium",
+        "choiceB": "Magnesium",
+        "choiceC": "Iron",
+        "choiceD": "Lead",
+        "correct": "B"
+      },
+      {
+        "question": "What is the pH of a neutral solution?",
+        "choiceA": "0",
+        "choiceB": "7",
+        "choiceC": "14",
+        "choiceD": "10",
+        "correct": "B"
+      },
+      {
+        "question": "Which type of bond is formed by the sharing of electrons?",
+        "choiceA": "Ionic bond",
+        "choiceB": "Covalent bond",
+        "choiceC": "Hydrogen bond",
+        "choiceD": "Metallic bond",
+        "correct": "B"
+      },
+      {
+        "question": "Which element is a noble gas?",
+        "choiceA": "Chlorine",
+        "choiceB": "Argon",
+        "choiceC": "Sulfur",
+        "choiceD": "Phosphorus",
+        "correct": "B"
+      },
+      {
+        "question": "What is the formula for sulfuric acid?",
+        "choiceA": "HCl",
+        "choiceB": "H2SO4",
+        "choiceC": "NaOH",
+        "choiceD": "CH3COOH",
+        "correct": "B"
+      },
+      {
+        "question": "What is the main component of table salt?",
+        "choiceA": "Sodium chloride",
+        "choiceB": "Potassium sulfate",
+        "choiceC": "Magnesium oxide",
+        "choiceD": "Calcium carbonate",
+        "correct": "A"
+      },
+      {
+        "question": "Which of these substances has the highest density?",
+        "choiceA": "Water",
+        "choiceB": "Air",
+        "choiceC": "Mercury",
+        "choiceD": "Hydrogen",
+        "correct": "C"
+      },
+      {
+        "question": "What type of reaction occurs when an acid and a base react?",
+        "choiceA": "Combustion",
+        "choiceB": "Neutralization",
+        "choiceC": "Redox",
+        "choiceD": "Decomposition",
+        "correct": "B"
+      },
+      {
+        "question": "What is the molecular formula of methane?",
+        "choiceA": "CH4",
+        "choiceB": "C2H6",
+        "choiceC": "CO2",
+        "choiceD": "H2O",
+        "correct": "A"
+      }
+    ],
+    "Geography": [
+      {
+        "question": "What is the largest continent by area?",
+        "choiceA": "Africa",
+        "choiceB": "North America",
+        "choiceC": "Antarctica",
+        "choiceD": "Asia",
+        "correct": "D"
+      },
+      {
+        "question": "What is the longest river in the world?",
+        "choiceA": "Amazon River",
+        "choiceB": "Nile River",
+        "choiceC": "Yangtze River",
+        "choiceD": "Mississippi River",
+        "correct": "B"
+      },
+      {
+        "question": "Which country has the most islands?",
+        "choiceA": "Canada",
+        "choiceB": "Indonesia",
+        "choiceC": "Sweden",
+        "choiceD": "Philippines",
+        "correct": "C"
+      },
+      {
+        "question": "What is the capital of Australia?",
+        "choiceA": "Sydney",
+        "choiceB": "Melbourne",
+        "choiceC": "Canberra",
+        "choiceD": "Perth",
+        "correct": "C"
+      },
+      {
+        "question": "Which desert is the largest in the world?",
+        "choiceA": "Sahara",
+        "choiceB": "Gobi",
+        "choiceC": "Atacama",
+        "choiceD": "Kalahari",
+        "correct": "A"
+      },
+      {
+        "question": "Which ocean is the deepest?",
+        "choiceA": "Atlantic Ocean",
+        "choiceB": "Indian Ocean",
+        "choiceC": "Arctic Ocean",
+        "choiceD": "Pacific Ocean",
+        "correct": "D"
+      },
+      {
+        "question": "What is the smallest country in the world by land area?",
+        "choiceA": "Monaco",
+        "choiceB": "Nauru",
+        "choiceC": "Vatican City",
+        "choiceD": "Liechtenstein",
+        "correct": "C"
+      },
+      {
+        "question": "Which mountain is the tallest in the world?",
+        "choiceA": "K2",
+        "choiceB": "Mount Kilimanjaro",
+        "choiceC": "Mount Everest",
+        "choiceD": "Denali",
+        "correct": "C"
+      },
+      {
+        "question": "What is the largest island in the world?",
+        "choiceA": "Greenland",
+        "choiceB": "Madagascar",
+        "choiceC": "Australia",
+        "choiceD": "Borneo",
+        "correct": "A"
+      },
+      {
+        "question": "Which U.S. state has the most coastline?",
+        "choiceA": "California",
+        "choiceB": "Florida",
+        "choiceC": "Alaska",
+        "choiceD": "Hawaii",
+        "correct": "C"
+      },
+      {
+        "question": "What is the name of the imaginary line that divides the Earth into Northern and Southern Hemispheres?",
+        "choiceA": "Prime Meridian",
+        "choiceB": "Tropic of Cancer",
+        "choiceC": "Tropic of Capricorn",
+        "choiceD": "Equator",
+        "correct": "D"
+      },
+      {
+        "question": "Which country shares the longest land border with the United States?",
+        "choiceA": "Mexico",
+        "choiceB": "Canada",
+        "choiceC": "Russia",
+        "choiceD": "Brazil",
+        "correct": "B"
+      }
+    ],
+    "Biology": [
+      {
+        "question": "What is the basic unit of life?",
+        "choiceA": "Atom",
+        "choiceB": "Molecule",
+        "choiceC": "Cell",
+        "choiceD": "Tissue",
+        "correct": "C"
+      },
+      {
+        "question": "Which organelle is responsible for producing energy in a cell?",
+        "choiceA": "Nucleus",
+        "choiceB": "Mitochondrion",
+        "choiceC": "Ribosome",
+        "choiceD": "Lysosome",
+        "correct": "B"
+      },
+      {
+        "question": "Which molecule carries genetic information?",
+        "choiceA": "RNA",
+        "choiceB": "DNA",
+        "choiceC": "Protein",
+        "choiceD": "Lipid",
+        "correct": "B"
+      },
+      {
+        "question": "What is the process by which plants make their own food?",
+        "choiceA": "Respiration",
+        "choiceB": "Fermentation",
+        "choiceC": "Photosynthesis",
+        "choiceD": "Digestion",
+        "correct": "C"
+      },
+      {
+        "question": "Which blood cells help fight infections?",
+        "choiceA": "Red blood cells",
+        "choiceB": "Platelets",
+        "choiceC": "White blood cells",
+        "choiceD": "Plasma",
+        "correct": "C"
+      },
+      {
+        "question": "What type of organism lacks a nucleus?",
+        "choiceA": "Fungi",
+        "choiceB": "Protist",
+        "choiceC": "Prokaryote",
+        "choiceD": "Eukaryote",
+        "correct": "C"
+      },
+      {
+        "question": "Which organ removes waste from the blood?",
+        "choiceA": "Liver",
+        "choiceB": "Heart",
+        "choiceC": "Kidney",
+        "choiceD": "Lung",
+        "correct": "C"
+      },
+      {
+        "question": "What is the largest organ in the human body?",
+        "choiceA": "Liver",
+        "choiceB": "Skin",
+        "choiceC": "Brain",
+        "choiceD": "Heart",
+        "correct": "B"
+      },
+      {
+        "question": "Which macromolecule is the main source of energy for the body?",
+        "choiceA": "Protein",
+        "choiceB": "Lipid",
+        "choiceC": "Carbohydrate",
+        "choiceD": "Nucleic acid",
+        "correct": "C"
+      },
+      {
+        "question": "What is the powerhouse of the cell?",
+        "choiceA": "Nucleus",
+        "choiceB": "Mitochondrion",
+        "choiceC": "Ribosome",
+        "choiceD": "Chloroplast",
+        "correct": "B"
+      },
+      {
+        "question": "Which system in the human body transports oxygen?",
+        "choiceA": "Nervous system",
+        "choiceB": "Digestive system",
+        "choiceC": "Circulatory system",
+        "choiceD": "Endocrine system",
+        "correct": "C"
+      },
+      {
+        "question": "What is the process by which organisms maintain a stable internal environment?",
+        "choiceA": "Homeostasis",
+        "choiceB": "Metabolism",
+        "choiceC": "Evolution",
+        "choiceD": "Respiration",
+        "correct": "A"
+      }
+    ],
+    "Economics": [
+      {
+        "question": "Who is known as the father of economics?",
+        "choiceA": "Ricardo",
+        "choiceB": "Malthus",
+        "choiceC": "Adam Smith",
+        "choiceD": "J. M. Keynes",
+        "correct": "C"
+      },
+      {
+        "question": "What is the fundamental problem of economics?",
+        "choiceA": "Unlimited resources",
+        "choiceB": "Scarcity",
+        "choiceC": "Excess supply",
+        "choiceD": "Inflation",
+        "correct": "B"
+      },
+      {
+        "question": "What does GDP stand for?",
+        "choiceA": "Gross Domestic Product",
+        "choiceB": "General Development Plan",
+        "choiceC": "Government Debt Projection",
+        "choiceD": "Global Demand Percentage",
+        "correct": "A"
+      },
+      {
+        "question": "What type of market structure has only one seller?",
+        "choiceA": "Perfect competition",
+        "choiceB": "Monopoly",
+        "choiceC": "Oligopoly",
+        "choiceD": "Monopolistic competition",
+        "correct": "B"
+      },
+      {
+        "question": "What is the opportunity cost?",
+        "choiceA": "The cost of producing goods",
+        "choiceB": "The value of the next best alternative foregone",
+        "choiceC": "The total revenue of a business",
+        "choiceD": "The amount spent on raw materials",
+        "correct": "B"
+      },
+      {
+        "question": "What does inflation refer to?",
+        "choiceA": "A decrease in the price of goods",
+        "choiceB": "A rise in the general price level of goods and services",
+        "choiceC": "A reduction in employment rates",
+        "choiceD": "An increase in government spending",
+        "correct": "B"
+      },
+      {
+        "question": "What is the main function of a central bank?",
+        "choiceA": "Printing newspapers",
+        "choiceB": "Regulating the money supply and interest rates",
+        "choiceC": "Managing private businesses",
+        "choiceD": "Controlling international trade",
+        "correct": "B"
+      },
+      {
+        "question": "What is a mixed economy?",
+        "choiceA": "An economy controlled entirely by the government",
+        "choiceB": "An economy with both private and public sector involvement",
+        "choiceC": "An economy based only on agriculture",
+        "choiceD": "An economy with no government intervention",
+        "correct": "B"
+      },
+      {
+        "question": "What is the law of demand?",
+        "choiceA": "As price increases, demand increases",
+        "choiceB": "As price decreases, demand decreases",
+        "choiceC": "As price increases, demand decreases",
+        "choiceD": "Demand is independent of price",
+        "correct": "C"
+      },
+      {
+        "question": "What is fiscal policy?",
+        "choiceA": "Government policies related to taxation and spending",
+        "choiceB": "Policies controlling the money supply",
+        "choiceC": "Regulations on international trade",
+        "choiceD": "Strategies for business growth",
+        "correct": "A"
+      },
+      {
+        "question": "What is the role of supply in economics?",
+        "choiceA": "It determines the price of goods and services",
+        "choiceB": "It has no impact on the economy",
+        "choiceC": "It only affects government spending",
+        "choiceD": "It is unrelated to demand",
+        "correct": "A"
+      },
+      {
+        "question": "What is a tariff?",
+        "choiceA": "A tax on imported goods",
+        "choiceB": "A subsidy for local businesses",
+        "choiceC": "A government loan",
+        "choiceD": "A type of currency",
+        "correct": "A"
+      }
+    ],
+    "Physics": [
+      {
+        "question": "What is the unit of force in the SI system?",
+        "choiceA": "Newton",
+        "choiceB": "Joule",
+        "choiceC": "Watt",
+        "choiceD": "Pascal",
+        "correct": "A"
+      },
+      {
+        "question": "What is the speed of light in a vacuum?",
+        "choiceA": "3 × 10⁶ m/s",
+        "choiceB": "3 × 10⁸ m/s",
+        "choiceC": "3 × 10¹⁰ m/s",
+        "choiceD": "3 × 10¹² m/s",
+        "correct": "B"
+      },
+      {
+        "question": "Which law states that an object in motion stays in motion unless acted upon by an external force?",
+        "choiceA": "Newton’s First Law",
+        "choiceB": "Newton’s Second Law",
+        "choiceC": "Newton’s Third Law",
+        "choiceD": "Law of Conservation of Energy",
+        "correct": "A"
+      },
+      {
+        "question": "What is the formula for kinetic energy?",
+        "choiceA": "KE = mv²",
+        "choiceB": "KE = ½ mv²",
+        "choiceC": "KE = mgh",
+        "choiceD": "KE = Fd",
+        "correct": "B"
+      },
+      {
+        "question": "What is the force that opposes motion between two surfaces in contact?",
+        "choiceA": "Gravity",
+        "choiceB": "Friction",
+        "choiceC": "Tension",
+        "choiceD": "Normal force",
+        "correct": "B"
+      },
+      {
+        "question": "What type of wave is sound?",
+        "choiceA": "Transverse",
+        "choiceB": "Longitudinal",
+        "choiceC": "Electromagnetic",
+        "choiceD": "Standing",
+        "correct": "B"
+      },
+      {
+        "question": "What is the acceleration due to gravity on Earth?",
+        "choiceA": "9.8 m/s²",
+        "choiceB": "10 m/s²",
+        "choiceC": "8.5 m/s²",
+        "choiceD": "12 m/s²",
+        "correct": "A"
+      },
+      {
+        "question": "Which subatomic particle has no charge?",
+        "choiceA": "Proton",
+        "choiceB": "Electron",
+        "choiceC": "Neutron",
+        "choiceD": "Positron",
+        "correct": "C"
+      },
+      {
+        "question": "What is the first law of thermodynamics?",
+        "choiceA": "Energy cannot be created or destroyed, only transferred or transformed",
+        "choiceB": "The entropy of a system always increases",
+        "choiceC": "For every action, there is an equal and opposite reaction",
+        "choiceD": "Force equals mass times acceleration",
+        "correct": "A"
+      },
+      {
+        "question": "What is the SI unit of power?",
+        "choiceA": "Watt",
+        "choiceB": "Joule",
+        "choiceC": "Newton",
+        "choiceD": "Ampere",
+        "correct": "A"
+      },
+      {
+        "question": "What happens to the frequency of a wave when its wavelength decreases?",
+        "choiceA": "It increases",
+        "choiceB": "It decreases",
+        "choiceC": "It remains the same",
+        "choiceD": "It becomes zero",
+        "correct": "A"
+      },
+      {
+        "question": "What is the phenomenon where light bends as it passes from one medium to another?",
+        "choiceA": "Reflection",
+        "choiceB": "Refraction",
+        "choiceC": "Diffraction",
+        "choiceD": "Dispersion",
+        "correct": "B"
+      }
+    ],
+    "Tigrigna": [
+      {
+        "question": "Which language has the most native speakers worldwide?",
+        "choiceA": "English",
+        "choiceB": "Spanish",
+        "choiceC": "Mandarin Chinese",
+        "choiceD": "Hindi",
+        "correct": "C"
+      },
+      {
+        "question": "What is the official language of Brazil?",
+        "choiceA": "Spanish",
+        "choiceB": "Portuguese",
+        "choiceC": "Italian",
+        "choiceD": "French",
+        "correct": "B"
+      },
+      {
+        "question": "Which language is written using the Cyrillic alphabet?",
+        "choiceA": "Arabic",
+        "choiceB": "Russian",
+        "choiceC": "Greek",
+        "choiceD": "Hebrew",
+        "correct": "B"
+      },
+      {
+        "question": "What is the second most spoken language in the world by total speakers?",
+        "choiceA": "English",
+        "choiceB": "French",
+        "choiceC": "Spanish",
+        "choiceD": "Bengali",
+        "correct": "A"
+      },
+      {
+        "question": "Which language is considered the oldest written language still in use today?",
+        "choiceA": "Latin",
+        "choiceB": "Chinese",
+        "choiceC": "Egyptian",
+        "choiceD": "Greek",
+        "correct": "B"
+      },
+      {
+        "question": "Which country has the most official languages?",
+        "choiceA": "India",
+        "choiceB": "South Africa",
+        "choiceC": "Switzerland",
+        "choiceD": "Canada",
+        "correct": "B"
+      },
+      {
+        "question": "Which language has the most words?",
+        "choiceA": "German",
+        "choiceB": "English",
+        "choiceC": "French",
+        "choiceD": "Russian",
+        "correct": "B"
+      },
+      {
+        "question": "What is the only official language of the United States?",
+        "choiceA": "Spanish",
+        "choiceB": "English",
+        "choiceC": "None",
+        "choiceD": "French",
+        "correct": "C"
+      },
+      {
+        "question": "Which language has the most dialects?",
+        "choiceA": "Arabic",
+        "choiceB": "Chinese",
+        "choiceC": "Hindi",
+        "choiceD": "English",
+        "correct": "B"
+      },
+      {
+        "question": "Which language is spoken in the Vatican City?",
+        "choiceA": "Italian",
+        "choiceB": "Latin",
+        "choiceC": "French",
+        "choiceD": "Spanish",
+        "correct": "B"
+      },
+      {
+        "question": "Which language is known as the \"language of diplomacy\"?",
+        "choiceA": "English",
+        "choiceB": "French",
+        "choiceC": "Spanish",
+        "choiceD": "Arabic",
+        "correct": "B"
+      },
+      {
+        "question": "Which language uses the Devanagari script?",
+        "choiceA": "Thai",
+        "choiceB": "Hindi",
+        "choiceC": "Japanese",
+        "choiceD": "Greek",
+        "correct": "B"
+      }
+    ]
+  }
+}

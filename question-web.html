@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Question entry</title>
+ <link rel="stylesheet" href="question-web.css">
+</head>
+<body>
+  <script>
+    // Redirect to login page if not authenticated
+    if (localStorage.getItem('isTeacherAuthenticated') !== 'true') {
+      window.location.href = 'teacher-login.html';
+    }
+  </script>
+<div class="main-container">
+
+  <div class="question-writing">
+    <textarea class="js-text-area" name="q1" id="" placeholder="Enter your Question Here"></textarea>
+    <input class="choice-a" type="text" placeholder="Enter Choice A">
+    <input class="choice-b" type="text" placeholder="Enter Choice B">
+    <input class="choice-c" type="text" placeholder="Enter Choice C">
+    <input class="choice-d" type="text" placeholder="Enter Choice D">
+    <input class="correct-answer" type="text" placeholder="Enter Correct Answer (A, B, C, or D)">
+    <p class="max-questions-message" style="color: red; display: none;">Maximum of 12 questions reached. Cannot add more.</p>
+    <button class="save-question">Save Question</button>
+    <button class="reset-question js-reset-question">Reset Question</button>
+  </div>
+  
+
+
+
+
+
+
+  <a href="kshs.html">
+     <button class="back-button">Back to Base</button>
+  </a>
+</div>
+  <script type="module" src="question-web.js"></script>
+  <script>
+    const subject = new URLSearchParams(window.location.search).get('subject');
+    if (subject) {
+      localStorage.setItem('subjectName', JSON.stringify(subject));
+    }
+  </script>
+</body>
+</html>
