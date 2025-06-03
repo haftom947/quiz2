@@ -9,18 +9,18 @@ const wss = new WebSocket.Server({ server });
 const DATA_FILE = './data.json';
 
 // Load data from file
-let { students: savedStudents, questionBank } = fs.existsSync(DATA_FILE)
+let { students: savedStudents, questionBank, teacherPassword } = fs.existsSync(DATA_FILE)
   ? JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'))
-  : { students: {}, questionBank: {} };
+  : { students: {}, questionBank: {}, teacherPassword: "teacher123" };
 
 // In-memory WebSocket connections
 let students = {};
 
 // Save data to file
 function saveData() {
-  fs.writeFileSync(DATA_FILE, JSON.stringify({ students: savedStudents, questionBank }, null, 2));
+  fs.writeFileSync(DATA_FILE, JSON.stringify({ students: savedStudents, questionBank, teacherPassword 
+  }, null, 2));
 }
-
 wss.on('connection', (ws, req) => {
   console.log('New client connected');
 
@@ -106,6 +106,41 @@ wss.on('connection', (ws, req) => {
           }
         }
         break;
+       
+
+  case 'getTeacherPassword':
+    ws.send(JSON.stringify({
+      type: 'getTeacherPassword',
+      password: teacherPassword || "teacher123" // For checking password
+    }));
+    break;
+
+  case 'setTeacherPassword':
+    // Optionally, you can check the current password for security
+    if (data.currentPassword !== teacherPassword) {
+      ws.send(JSON.stringify({
+        type: 'setTeacherPassword',
+        status: 'error',
+        message: 'Current password is incorrect.'
+      }));
+    } else if (!data.newPassword || data.newPassword.length < 4) {
+      ws.send(JSON.stringify({
+        type: 'setTeacherPassword',
+        status: 'error',
+        message: 'New password must be at least 4 characters.'
+      }));
+    } else {
+      teacherPassword = data.newPassword;
+      saveData();
+      ws.send(JSON.stringify({
+        type: 'setTeacherPassword',
+        status: 'success'
+      }));
+    }
+    break;
+
+  // ... rest of your cases ...
+
 
       case 'submitAnswer':
         console.log(`Answer received from ${data.studentId}: ${data.answer}`);
