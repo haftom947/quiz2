@@ -1,4 +1,6 @@
 {
+  "teacherPassword": "teacher123",
+  
   "students": {
     "S1": {
       "name": "Haftom",
