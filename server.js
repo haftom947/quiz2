@@ -37,7 +37,7 @@ wss.on('connection', (ws, req) => {
       status: 'error',
       message: 'Student ID already registered.'
     }));
-    console.log(`Duplicate registration attempt for student ID: ${data.studentId}`);
+    alert(`Duplicate registration attempt for student ID: ${data.studentId}`);
     return; // Stop further processing
   }
 
