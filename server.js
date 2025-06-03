@@ -31,6 +31,27 @@ wss.on('connection', (ws, req) => {
 
     switch (data.type) {
       case 'register':
+        if (savedStudents[data.studentId]) {
+    ws.send(JSON.stringify({
+      type: 'register',
+      status: 'error',
+      message: 'Student ID already registered.'
+    }));
+    console.log(`Duplicate registration attempt for student ID: ${data.studentId}`);
+    return; // Stop further processing
+  }
+
+  // Validate required fields (name, ID, password)
+  if (!data.studentName || !data.studentId || !data.studentPassword) {
+    ws.send(JSON.stringify({
+      type: 'register',
+      status: 'error',
+      message: 'All fields are required.'
+    }));
+    console.log('Registration failed: Missing fields.');
+    return;
+  }
+
         // Store the WebSocket connection in memory
         students[data.studentId] = ws;
         console.log('Student WebSocket registered:', data.studentId);
