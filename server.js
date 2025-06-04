@@ -15,6 +15,9 @@ let { students: savedStudents, questionBank, teacherPassword } = fs.existsSync(D
 
 // In-memory WebSocket connections
 let students = {};
+let lastQuestionsForStudent = {}; 
+// { studentId: questionObj }
+
 
 // Save data to file
 function saveData() {
@@ -87,6 +90,7 @@ wss.on('connection', (ws, req) => {
           };
           console.log('Sending to student:', data.studentId, message);
           targetStudent.send(JSON.stringify(message));
+          lastQuestionsForStudent[data.studentId] = questionToSend;
           ws.send(JSON.stringify({ type: 'sendQuestion', status: 'success' }));
           console.log(`Question sent to student: ${data.studentId}`);
         } else {
@@ -143,14 +147,31 @@ wss.on('connection', (ws, req) => {
 
 
       case 'submitAnswer':
-        console.log(`Answer received from ${data.studentId}: ${data.answer}`);
-        ws.send(
-          JSON.stringify({
-            type: 'submitAnswer',
-            status: 'received',
-          })
-        );
-        break;
+    const lastQuestion = lastQuestionsForStudent[data.studentId];
+    let feedback = '';
+    if (lastQuestion && lastQuestion.correct === data.answer) {
+        feedback = 'Correct!';
+    } else {
+        feedback = 'Incorrect!';
+    }
+
+    ws.send(JSON.stringify({
+        type: 'submitAnswer',
+        status: 'received',
+    }));
+
+    // Send to all teachers
+    const answerMsg = {
+        type: 'studentAnswered',
+        studentId: data.studentId,
+        question: lastQuestion ? lastQuestion.question : '',
+        answer: data.answer,
+        feedback: feedback
+    };
+    teachers.forEach(teacherWs => {
+        try { teacherWs.send(JSON.stringify(answerMsg)); } catch {}
+    });
+    break;
 
       case 'addQuestion':
         if (!questionBank[data.subject]) {
