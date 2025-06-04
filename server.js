@@ -78,16 +78,28 @@ wss.on('connection', (ws, req) => {
         const questionToSend = qArr[questionIndex];
         const targetStudent = students[data.studentId];
 
-        if (targetStudent && questionToSend) {
-          const message = {
-            type: 'question',
-            question: questionToSend,
-          };
-          targetStudent.send(JSON.stringify(message));
-          lastQuestionsForStudent[data.studentId] = questionToSend;
-          ws.send(JSON.stringify({ type: 'sendQuestion', status: 'success' }));
-          console.log(`Question sent to student: ${data.studentId}`);
-        } else {
+       if (targetStudent && questionToSend) {
+  const message = {
+    type: 'question',
+    question: questionToSend,
+  };
+  targetStudent.send(JSON.stringify(message));
+  lastQuestionsForStudent[data.studentId] = questionToSend;
+
+  // Send question details to the teacher too
+  ws.send(JSON.stringify({
+    type: 'sentQuestionToTeacher',
+    studentId: data.studentId,
+    question: questionToSend.question,
+    choiceA: questionToSend.choiceA,
+    choiceB: questionToSend.choiceB,
+    choiceC: questionToSend.choiceC,
+    choiceD: questionToSend.choiceD
+  }));
+
+  ws.send(JSON.stringify({ type: 'sendQuestion', status: 'success' }));
+  console.log(`Question sent to student: ${data.studentId}`);
+} else {
           ws.send(JSON.stringify({
             type: 'sendQuestion',
             status: 'error',
