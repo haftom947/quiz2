@@ -85,4 +85,155 @@ wss.on('connection', (ws, req) => {
           };
           targetStudent.send(JSON.stringify(message));
           lastQuestionsForStudent[data.studentId] = questionToSend;
-          ws.send(JSON.stringify({ type: 'sendQuestion', statu
+          ws.send(JSON.stringify({ type: 'sendQuestion', status: 'success' }));
+          console.log(`Question sent to student: ${data.studentId}`);
+        } else {
+          ws.send(JSON.stringify({
+            type: 'sendQuestion',
+            status: 'error',
+            message: 'Student not connected or question not found',
+          }));
+        }
+        break;
+
+      case 'submitAnswer':
+        const lastQuestion = lastQuestionsForStudent[data.studentId];
+        let feedback = '';
+
+        if (lastQuestion && lastQuestion.correct === data.answer) {
+          feedback = 'Correct!';
+        } else {
+          feedback = 'Incorrect!';
+        }
+
+        ws.send(JSON.stringify({
+          type: 'submitAnswer',
+          status: 'received'
+        }));
+
+        const answerMsg = {
+          type: 'studentAnswered',
+          studentId: data.studentId,
+          question: lastQuestion ? lastQuestion.question : '',
+          answer: data.answer,
+          feedback: feedback
+        };
+
+        teachers = teachers.filter(sock => sock.readyState === WebSocket.OPEN);
+        teachers.forEach(teacherWs => {
+          if (teacherWs.readyState === WebSocket.OPEN && teacherWs.role === 'teacher') {
+            try {
+              teacherWs.send(JSON.stringify(answerMsg));
+            } catch (e) {
+              console.log('Error sending to teacher:', e.message);
+            }
+          }
+        });
+        break;
+
+      case 'addQuestion':
+        if (!questionBank[data.subject]) {
+          questionBank[data.subject] = [];
+        }
+        questionBank[data.subject].push(data.question);
+        saveData();
+        console.log(`Question added to ${data.subject}:`, data.question);
+        break;
+
+      case 'resetQuestions':
+        if (data.subject && questionBank[data.subject]) {
+          questionBank[data.subject] = [];
+          saveData();
+          console.log(`Questions for subject "${data.subject}" have been reset.`);
+        }
+        break;
+
+      case 'resetSystem':
+        savedStudents = {};
+        saveData();
+        console.log('System reset: All students cleared.');
+        break;
+
+      case 'resetStudents':
+        savedStudents = {};
+        saveData();
+        console.log('All student data has been reset.');
+        break;
+
+      case 'login':
+        const student = savedStudents[data.id];
+        if (student && student.name === data.name && student.password === data.password) {
+          students[data.id] = ws;
+          ws.role = 'student';
+          ws.send(JSON.stringify({ type: 'login', status: 'success', studentId: data.id }));
+          console.log(`Student logged in: ${data.id}`);
+        } else {
+          ws.send(JSON.stringify({
+            type: 'login',
+            status: 'error',
+            message: 'Invalid credentials'
+          }));
+          console.log(`Failed login for ID: ${data.id}`);
+        }
+        break;
+
+      case 'getTeacherPassword':
+        ws.send(JSON.stringify({
+          type: 'getTeacherPassword',
+          password: teacherPassword || "teacher123"
+        }));
+        break;
+
+      case 'setTeacherPassword':
+        if (data.currentPassword !== teacherPassword) {
+          ws.send(JSON.stringify({
+            type: 'setTeacherPassword',
+            status: 'error',
+            message: 'Current password is incorrect.'
+          }));
+        } else if (!data.newPassword || data.newPassword.length < 4) {
+          ws.send(JSON.stringify({
+            type: 'setTeacherPassword',
+            status: 'error',
+            message: 'New password must be at least 4 characters.'
+          }));
+        } else {
+          teacherPassword = data.newPassword;
+          saveData();
+          ws.send(JSON.stringify({ type: 'setTeacherPassword', status: 'success' }));
+        }
+        break;
+
+      default:
+        console.log('Unknown message type:', data.type);
+    }
+  });
+
+  ws.on('close', () => {
+    console.log('Client disconnected');
+
+    // Remove from students
+    for (const [id, socket] of Object.entries(students)) {
+      if (socket === ws) {
+        delete students[id];
+        console.log(`Student disconnected: ${id}`);
+        break;
+      }
+    }
+
+    // Remove from teachers
+    teachers = teachers.filter(sock => sock !== ws);
+  });
+});
+
+// Start the server
+const PORT = process.env.PORT || 8080;
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
+
+// Minimal HTTP response to satisfy Render port scanner
+server.on('request', (req, res) => {
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.end('WebSocket server is live.');
+});
