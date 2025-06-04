@@ -36,6 +36,28 @@ wss.on('connection', (ws, req) => {
         teachers.push(ws);
         console.log('Registered a teacher. Total teachers:', teachers.length);
         break;
+case 'getQuestionsForSubject':
+  if (ws.role === 'teacher') {
+    const subject = data.subject;
+    ws.send(JSON.stringify({
+      type: 'questionsForSubject',
+      subject: subject,
+      questions: questionBank[subject] || []
+    }));
+  }
+  break;
+
+        
+        case 'getAllStudents':
+  // Only respond if the requester is a teacher
+  if (ws.role === 'teacher') {
+    // Option 1: Just IDs and names
+    ws.send(JSON.stringify({
+      type: 'allStudents',
+      students: Object.values(savedStudents) // [{name, id, password}]
+    }));
+  }
+  break;
 
       case 'register':
         ws.role = 'student';
