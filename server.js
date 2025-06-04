@@ -16,6 +16,7 @@ let { students: savedStudents, questionBank, teacherPassword } = fs.existsSync(D
 // In-memory WebSocket connections
 let students = {};
 let lastQuestionsForStudent = {}; 
+let teachers = []; // To store teacher sockets
 // { studentId: questionObj }
 
 
@@ -33,6 +34,9 @@ wss.on('connection', (ws, req) => {
     const data = JSON.parse(msgStr);
 
     switch (data.type) {
+        case 'registerTeacher':
+          teachers.push(ws);
+          break;
       case 'register':
         if (savedStudents[data.studentId]) {
     ws.send(JSON.stringify({
@@ -248,6 +252,7 @@ wss.on('connection', (ws, req) => {
         break;
       }
     }
+    teachers = teachers.filter(sock => sock !== ws);
   });
 });
 
