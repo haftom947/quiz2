@@ -124,12 +124,16 @@ wss.on('connection', (ws, req) => {
         }));
 
         const answerMsg = {
-          type: 'studentAnswered',
-          studentId: data.studentId,
-          question: lastQuestion ? lastQuestion.question : '',
-          answer: data.answer,
-          feedback: feedback
-        };
+  type: 'studentAnswered',
+  studentId: data.studentId,
+  question: lastQuestion ? lastQuestion.question : '',
+  choiceA: lastQuestion ? lastQuestion.choiceA : '',
+  choiceB: lastQuestion ? lastQuestion.choiceB : '',
+  choiceC: lastQuestion ? lastQuestion.choiceC : '',
+  choiceD: lastQuestion ? lastQuestion.choiceD : '',
+  answer: data.answer,
+  feedback: feedback
+};
 
         teachers = teachers.filter(sock => sock.readyState === WebSocket.OPEN);
         teachers.forEach(teacherWs => {
